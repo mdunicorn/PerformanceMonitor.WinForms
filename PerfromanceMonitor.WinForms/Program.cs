@@ -16,6 +16,7 @@ namespace PerfromanceMonitor.WinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Configuration.LoadIfExists();
             Application.Run(new MainForm());
         }
     }

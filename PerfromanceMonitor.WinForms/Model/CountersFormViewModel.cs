@@ -10,30 +10,20 @@ using System.Threading.Tasks;
 
 namespace PerformanceMonitor.Model
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class CountersFormViewModel : INotifyPropertyChanged
     {
         private IReadOnlyList<string> _instances = Array.Empty<string>();
         private IReadOnlyList<PerformanceCounter> _counters = Array.Empty<PerformanceCounter>();
         private PerformanceCounterCategory? _currentCategory;
         private string? _currentInstance;
         private PerformanceCounter? _currentCounter;
-        private IList<PerformanceCounter> _currentCounters = new List<PerformanceCounter>();
-        private IList<PerformanceCounter> _addedCounters = new List<PerformanceCounter>();
-        private IReadOnlyList<SamplingInterval> _allIntervals;
-        private SamplingInterval _selectedInterval;
+        //private IList<PerformanceCounter> _currentCounters = new List<PerformanceCounter>();
+        //private IList<PerformanceCounter> _addedCounters = new List<PerformanceCounter>();
 
 
-        public MainWindowViewModel()
+        public CountersFormViewModel()
         {
             FillCategories();
-            _allIntervals = new List<SamplingInterval>()
-            {
-                new SamplingInterval(200, "0.2 seconds"),
-                new SamplingInterval(500, "0.5 seconds"),
-                new SamplingInterval(1000, "1 second"),
-                new SamplingInterval(5000, "5 seconds"),
-            };
-            _selectedInterval = _allIntervals[0];
         }
 
         public IReadOnlyList<PerformanceCounterCategory> Categories { get; private set; } = Array.Empty<PerformanceCounterCategory>();
@@ -99,31 +89,23 @@ namespace PerformanceMonitor.Model
             }
         }
 
-        public IList<PerformanceCounter> CurrentCounters
-        {
-            get => _currentCounters;
-            set
-            {
-                _currentCounters = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCounters)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCounterHelp)));
-            }
-        }
+        //public IList<PerformanceCounter> CurrentCounters
+        //{
+        //    get => _currentCounters;
+        //    set
+        //    {
+        //        _currentCounters = value;
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCounters)));
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCounterHelp)));
+        //    }
+        //}
 
         public string? CurrentCounterHelp
         {
             get => CurrentCounter?.CounterHelp;
         }
-        public IList<PerformanceCounter> AddedCounters { get => _addedCounters; set => _addedCounters = value; }
 
-        public IReadOnlyList<SamplingInterval> AllIntervals => _allIntervals;
-
-        public SamplingInterval SelectedInterval
-        {
-            get { return _selectedInterval; }
-            set { _selectedInterval = value; }
-        }
-
+        //public IList<PerformanceCounter> AddedCounters { get => _addedCounters; set => _addedCounters = value; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -169,15 +151,4 @@ namespace PerformanceMonitor.Model
         }
     }
 
-    public class SamplingInterval
-    {
-        public SamplingInterval(int intervalMS, string text)
-        {
-            IntervalMS = intervalMS;
-            Text = text;
-        }
-
-        public int IntervalMS { get; set; }
-        public string Text { get; set; }
-    }
 }
